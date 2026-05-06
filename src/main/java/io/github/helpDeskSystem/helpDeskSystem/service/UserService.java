@@ -21,12 +21,10 @@ public class UserService {
         return repository.findAll().stream().map(u -> new UserDTO(u.getId(), u.getName(), u.getEmail(), u.getPhoneNumber(), u.getTicketList())).toList();
     }
 
-    public ResponseEntity<UserDTO> createUser(UserCreationDTO dto, UriComponentsBuilder uriBuilder) {
+    public UserDTO createUser(UserCreationDTO dto) {
         var user = new User(dto);
         repository.save(user);
 
-        var uri = uriBuilder.path("/users/{id}").buildAndExpand(dto.id()).toUri();
-
-        return ResponseEntity.created(uri).body(new UserDTO(user));
+        return new UserDTO(user);
     }
 }

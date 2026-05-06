@@ -29,6 +29,8 @@ public class UserController {
     @PostMapping
     @Operation(summary = "Create an user")
     public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserCreationDTO dto, UriComponentsBuilder uriBuilder){
-        return service.createUser(dto, uriBuilder);
+        var uri = uriBuilder.path("/users/{id}").buildAndExpand(dto.id()).toUri();
+        var userDto = service.createUser(dto);
+        return ResponseEntity.created(uri).body(userDto);
     }
 }
