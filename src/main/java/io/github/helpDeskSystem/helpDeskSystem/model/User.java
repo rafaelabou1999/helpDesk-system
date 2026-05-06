@@ -1,6 +1,7 @@
 package io.github.helpDeskSystem.helpDeskSystem.model;
 
 
+import io.github.helpDeskSystem.helpDeskSystem.dto.UserCreationDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,4 +27,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ticket> ticketList;
 
+    public User(UserCreationDTO dto){
+        this.id = dto.id();
+        this.name = dto.name();
+        this.email = dto.email();
+        this.phoneNumber = dto.phoneNumber();
+    }
 }
