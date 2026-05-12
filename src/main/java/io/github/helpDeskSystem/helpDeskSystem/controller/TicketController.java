@@ -1,17 +1,30 @@
 package io.github.helpDeskSystem.helpDeskSystem.controller;
 
+import io.github.helpDeskSystem.helpDeskSystem.dto.TicketCreationDTO;
+import io.github.helpDeskSystem.helpDeskSystem.dto.TicketDTO;
+import io.github.helpDeskSystem.helpDeskSystem.model.Ticket;
+import io.github.helpDeskSystem.helpDeskSystem.model.User;
+import io.github.helpDeskSystem.helpDeskSystem.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("users")
 public class TicketController {
-    @PostMapping("users/{id}/tickets")
-    @Operation(summary = "Create a ticket")
-    public void createTicket(@PathVariable Long id){
+    @Autowired
+    TicketService service;
 
+
+    @PostMapping("/{id}/tickets")
+    @Operation(summary = "Create a ticket")
+    public ResponseEntity<TicketDTO> createTicket(@PathVariable Long id, @RequestBody @Valid TicketCreationDTO dto, UriComponentsBuilder uriBuilder){
+       var ticketDto = service.createTicket(id, dto);
+
+       var uri = uriBuilder.path("/users/{id}/tickets").buildAndExpand(id).toUri();
+       return ResponseEntity.created(uri).body(ticketDto);
     }
 }

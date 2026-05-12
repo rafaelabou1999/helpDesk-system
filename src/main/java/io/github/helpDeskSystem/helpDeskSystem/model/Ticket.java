@@ -1,11 +1,17 @@
 package io.github.helpDeskSystem.helpDeskSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.github.helpDeskSystem.helpDeskSystem.dto.TicketCreationDTO;
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.Valid;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name="tickets")
 public class Ticket {
@@ -28,7 +34,18 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }
 }

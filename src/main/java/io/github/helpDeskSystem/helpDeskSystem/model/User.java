@@ -1,14 +1,20 @@
 package io.github.helpDeskSystem.helpDeskSystem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.github.helpDeskSystem.helpDeskSystem.dto.TicketCreationDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.UserCreationDTO;
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.Valid;
+import lombok.*;
 
 import java.util.List;
 
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="users")
 public class User {
@@ -24,6 +30,7 @@ public class User {
 
     private String phoneNumber;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Ticket> ticketList;
 
@@ -33,4 +40,5 @@ public class User {
         this.email = dto.email();
         this.phoneNumber = dto.phoneNumber();
     }
+
 }
