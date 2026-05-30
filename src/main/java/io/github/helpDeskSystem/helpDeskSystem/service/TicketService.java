@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -38,6 +39,7 @@ public class TicketService {
         var ticket = repository.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
 
         ticket.setStatus(Status.IN_PROGRESS);
+        ticket.setUpdatedAt(LocalDateTime.now());
         repository.save(ticket);
 
         return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
@@ -49,6 +51,7 @@ public class TicketService {
 
         if(user.getTicketList().contains(ticket)){
             ticket.setStatus(Status.CLOSED);
+            ticket.setUpdatedAt(LocalDateTime.now());
         }
         repository.save(ticket);
 
