@@ -28,6 +28,7 @@ public class TicketService {
         var ticket = new Ticket(null, dto.title(), dto.description(), null, null, null, user);
 
         ticket.setStatus(Status.OPEN);
+        ticket.setCreatedAt(LocalDateTime.now());
         repository.save(ticket);
 
         return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), ticket.getUpdatedAt(), ticket.getStatus(), ticket.getUser());
