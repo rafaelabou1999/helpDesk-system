@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
 public class TicketService {
@@ -31,30 +30,27 @@ public class TicketService {
         ticket.setStatus(Status.OPEN);
         repository.save(ticket);
 
-        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
+        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), ticket.getUpdatedAt(), ticket.getStatus(), ticket.getUser());
     }
 
     public TicketDTO callAttendant(Long userId, Long ticketId) {
-        var user = repoUser.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        var ticket = repository.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new RuntimeException("Ticket not found"));
 
         ticket.setStatus(Status.IN_PROGRESS);
         ticket.setUpdatedAt(LocalDateTime.now());
         repository.save(ticket);
 
-        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
+        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), ticket.getUpdatedAt(), ticket.getStatus(), ticket.getUser());
     }
 
     public TicketDTO closeTicket(Long userId, Long ticketId){
-        var user = repoUser.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        var ticket = repository.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new RuntimeException("Ticket not found"));
 
-        if(user.getTicketList().contains(ticket)){
-            ticket.setStatus(Status.CLOSED);
-            ticket.setUpdatedAt(LocalDateTime.now());
-        }
+        ticket.setStatus(Status.CLOSED);
+        ticket.setUpdatedAt(LocalDateTime.now());
+
         repository.save(ticket);
 
-        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
+        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), ticket.getUpdatedAt(), ticket.getStatus(), ticket.getUser());
     }
 }

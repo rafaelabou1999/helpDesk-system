@@ -2,10 +2,6 @@ package io.github.helpDeskSystem.helpDeskSystem.controller;
 
 import io.github.helpDeskSystem.helpDeskSystem.dto.TicketCreationDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.TicketDTO;
-import io.github.helpDeskSystem.helpDeskSystem.dto.TicketStatusDTO;
-import io.github.helpDeskSystem.helpDeskSystem.dto.UserDTO;
-import io.github.helpDeskSystem.helpDeskSystem.model.Ticket;
-import io.github.helpDeskSystem.helpDeskSystem.model.User;
 import io.github.helpDeskSystem.helpDeskSystem.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

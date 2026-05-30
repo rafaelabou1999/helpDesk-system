@@ -2,7 +2,6 @@ package io.github.helpDeskSystem.helpDeskSystem.controller;
 
 import io.github.helpDeskSystem.helpDeskSystem.dto.UserCreationDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.UserDTO;
-import io.github.helpDeskSystem.helpDeskSystem.model.User;
 import io.github.helpDeskSystem.helpDeskSystem.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
