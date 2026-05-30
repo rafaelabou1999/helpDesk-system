@@ -42,4 +42,16 @@ public class TicketService {
 
         return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
     }
+
+    public TicketDTO closeTicket(Long userId, Long ticketId){
+        var user = repoUser.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        var ticket = repository.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+
+        if(user.getTicketList().contains(ticket)){
+            ticket.setStatus(Status.CLOSED);
+        }
+        repository.save(ticket);
+
+        return new TicketDTO(ticket.getId(), ticket.getTitle(), ticket.getDescription(), ticket.getCreatedAt(), null, ticket.getStatus(), ticket.getUser());
+    }
 }

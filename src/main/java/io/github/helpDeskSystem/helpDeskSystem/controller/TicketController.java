@@ -3,6 +3,7 @@ package io.github.helpDeskSystem.helpDeskSystem.controller;
 import io.github.helpDeskSystem.helpDeskSystem.dto.TicketCreationDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.TicketDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.TicketStatusDTO;
+import io.github.helpDeskSystem.helpDeskSystem.dto.UserDTO;
 import io.github.helpDeskSystem.helpDeskSystem.model.Ticket;
 import io.github.helpDeskSystem.helpDeskSystem.model.User;
 import io.github.helpDeskSystem.helpDeskSystem.service.TicketService;
@@ -30,11 +31,15 @@ public class TicketController {
     }
 
     @PatchMapping("/{userId}/tickets/{ticketId}")
-    public ResponseEntity<TicketDTO> callAttendant(@RequestBody TicketStatusDTO dto, @PathVariable Long userId, @PathVariable Long ticketId, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<TicketDTO> callAttendant(@PathVariable Long userId, @PathVariable Long ticketId, UriComponentsBuilder uriBuilder){
         var ticketDto = service.callAttendant(userId, ticketId);
 
-        var uri = uriBuilder.path("/users/{userId}/tickets/{ticketId}").buildAndExpand(userId, ticketId).toUri();
-        return ResponseEntity.created(uri).body(ticketDto);
+        return ResponseEntity.ok(ticketDto);
     }
 
+    @PatchMapping("/{userId}/tickets/{ticketId}/close")
+    public ResponseEntity<TicketDTO>  closeTicket(@PathVariable Long userId, @PathVariable Long ticketId, UriComponentsBuilder uriBuilder){
+        var ticketDto = service.closeTicket(userId, ticketId);
+        return ResponseEntity.ok(ticketDto);
+    }
 }
