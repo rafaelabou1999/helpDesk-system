@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HelpDeskSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelpDeskSystemApplication.class, args);
+
+        SpringApplication.run(HelpDeskSystemApplication.class, args);
 	}
 
 }

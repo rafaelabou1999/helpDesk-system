@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService service;
@@ -29,8 +29,17 @@ public class UserController {
     @PostMapping
     @Operation(summary = "Create an user")
     public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserCreationDTO dto, UriComponentsBuilder uriBuilder){
-        var uri = uriBuilder.path("/users/{id}").buildAndExpand(dto.id()).toUri();
         var userDto = service.createUser(dto);
+        var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.id()).toUri();
+
         return ResponseEntity.created(uri).body(userDto);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Display one user")
+    public ResponseEntity<UserDTO> displayOneUser(@PathVariable("id") Long id){
+        var user = service.displayOneUser(id);
+
+        return ResponseEntity.ok(user);
     }
 }

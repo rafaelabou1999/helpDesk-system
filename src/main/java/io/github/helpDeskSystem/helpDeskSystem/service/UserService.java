@@ -27,4 +27,10 @@ public class UserService {
 
         return new UserDTO(user);
     }
+
+    public UserDTO displayOneUser(Long id) {
+        var user = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new UserDTO(user);
+    }
 }
