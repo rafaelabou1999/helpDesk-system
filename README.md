@@ -49,7 +49,7 @@ A REST API developed with Java and Spring Boot for managing users and support ti
 | Method | Endpoint                                            | Description                    |
 | ------ | --------------------------------------------------- | ------------------------------ |
 | POST   | `/users/{id}/tickets`                               | Create a ticket for a user     |
-| PATCH  | `/users/{userId}/tickets/{ticketId}/call-attendant` | Change status to `IN_PROGRESS` |
+| PATCH  | `/users/{userId}/tickets/{ticketId}`                | Change status to `IN_PROGRESS` |
 | PATCH  | `/users/{userId}/tickets/{ticketId}/close`          | Close a ticket                 |
 
 ---
