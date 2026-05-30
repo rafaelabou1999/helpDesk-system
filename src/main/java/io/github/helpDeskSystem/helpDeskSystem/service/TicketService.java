@@ -35,7 +35,7 @@ public class TicketService {
     }
 
     public TicketDTO callAttendant(Long userId, Long ticketId) {
-        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
 
         ticket.setStatus(Status.IN_PROGRESS);
         ticket.setUpdatedAt(LocalDateTime.now());
@@ -45,7 +45,7 @@ public class TicketService {
     }
 
     public TicketDTO closeTicket(Long userId, Long ticketId){
-        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        var ticket = repository.findByIdAndUserId(ticketId, userId).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
 
         ticket.setStatus(Status.CLOSED);
         ticket.setUpdatedAt(LocalDateTime.now());

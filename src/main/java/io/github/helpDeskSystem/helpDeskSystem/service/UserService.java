@@ -4,6 +4,7 @@ import io.github.helpDeskSystem.helpDeskSystem.dto.UserCreationDTO;
 import io.github.helpDeskSystem.helpDeskSystem.dto.UserDTO;
 import io.github.helpDeskSystem.helpDeskSystem.model.User;
 import io.github.helpDeskSystem.helpDeskSystem.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class UserService {
     }
 
     public UserDTO displayOneUser(Long id) {
-        var user = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        var user = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         return new UserDTO(user);
     }
