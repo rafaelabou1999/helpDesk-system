@@ -27,7 +27,7 @@ public class TicketController {
     }
 
     @PatchMapping("/{userId}/tickets/{ticketId}")
-    @Operation(summary = "Call attendant to change to IN_PROGRESS")
+    @Operation(summary = "Change status to `IN_PROGRESS")
     public ResponseEntity<TicketDTO> callAttendant(@PathVariable Long userId, @PathVariable Long ticketId, UriComponentsBuilder uriBuilder){
         var ticketDto = service.callAttendant(userId, ticketId);
 
